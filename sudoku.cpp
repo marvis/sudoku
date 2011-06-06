@@ -277,6 +277,50 @@ Second:
 				else return true;
 			}
 		}
+
+	for(int i = 0; i < 9; i++)
+	{
+		for(int j = 0; j < 9; j++)
+		{
+			if(posible_state[i][j].size() == 3)
+			{
+				int bak_matrix[9][9];
+				int bak_order = order;
+				copy_matrix(matrix, bak_matrix);
+				set<int>::iterator it = posible_state[i][j].begin();
+				cout<<" =========== asume "<<order++<<": ("<<i+1<<","<<j+1<<") "<<*it<<" ================="<<endl;
+				matrix[i][j] = *it;
+				if(sudoku(matrix) == -1)
+				{
+					cout<<"========== asume error ============="<<endl;
+					copy_matrix(bak_matrix, matrix);
+					order = bak_order;
+					it++;
+					cout<<" =========== asume "<<order++<<": ("<<i+1<<","<<j+1<<") "<<*it<<endl;
+					matrix[i][j] = *it;
+					if(sudoku(matrix) == -1)
+					{
+					cout<<"========== asume error ============="<<endl;
+					copy_matrix(bak_matrix, matrix);
+					order = bak_order;
+					it++;
+					cout<<" =========== asume "<<order++<<": ("<<i+1<<","<<j+1<<") "<<*it<<endl;
+					matrix[i][j] = *it;
+					return sudoku(matrix);
+					}
+				}
+				else return true;
+			}		
+		}
+	}
+
+	for(int i = 0; i < 9; i++)
+	{
+		for(int j = 0; j < 9; j++)
+		{
+			if(matrix[i][j] == 0 ) return false;
+		}
+	}
 	return true;
 }
 
@@ -285,7 +329,8 @@ int main(int argc, char* argv[])
 	int matrix[9][9];
 	for(int i = 0; i < 9; i++)
 		for(int j = 0; j < 9; j++)cin >> matrix[i][j];
-	if(sudoku(matrix)) 
+	print_matrix(matrix);
+	if(sudoku(matrix)==true) 
 	{
 		cout<<"================== Successful! ======================"<<endl;
 		print_matrix(matrix);

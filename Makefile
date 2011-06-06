@@ -1,3 +1,3 @@
 all:
-	g++ -o sudoku sudoku.cpp
+	g++ -g -o sudoku sudoku.cpp
 	./sudoku < input
